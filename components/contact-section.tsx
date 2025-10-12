@@ -60,17 +60,31 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-24 bg-muted/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-grid-black/[0.02] bg-grid-24"></div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-8 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">Get In Touch</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Ready to start your construction project in Kenya? Contact us today for a free consultation and quote.
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 text-balance font-inter">
+            Get In
+            <span className="text-orange-600"> Touch</span>
+          </h2>
+          <div className="flex justify-center mb-6">
+            <div className="w-16 h-1 bg-gradient-to-r from-orange-600 to-orange-500 rounded-full"></div>
+          </div>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Ready to start your construction project in Kenya? Contact us today for expert consultation and competitive quotes.
           </p>
-          <div className="mt-6">
+          <div className="mt-8">
             <GetQuoteModal>
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-                <Calculator className="mr-2 h-4 w-4" />
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white px-8 py-3 text-base font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                <Calculator className="mr-3 h-5 w-5" />
                 Get Instant Quote
               </Button>
             </GetQuoteModal>
