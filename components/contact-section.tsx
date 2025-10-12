@@ -19,12 +19,12 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Phone",
-    details: "+254 700 000 000",
+    details: "+254 717671843",
   },
   {
     icon: Mail,
     title: "Email",
-    details: "info@kenyaconstruction.co.ke",
+    details: "info@denwainnovations.co.ke",
   },
   {
     icon: Clock,
@@ -225,7 +225,7 @@ export function ContactSection() {
                   variant="outline"
                   className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-transparent"
                 >
-                  Emergency Line: +254 700 000 001
+                  Emergency Line: +254 717 671 843
                 </Button>
               </CardContent>
             </Card>
