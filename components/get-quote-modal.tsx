@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import { supabase, type QuoteRequest } from "@/lib/supabaseClient"
 import {
   Dialog,
   DialogContent,
@@ -29,6 +30,7 @@ export function GetQuoteModal({ children }: GetQuoteModalProps) {
   const [open, setOpen] = useState(false)
   const [images, setImages] = useState<File[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formData, setFormData] = useState<Partial<QuoteRequest>>({})
   const { toast } = useToast()
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,24 +52,290 @@ export function GetQuoteModal({ children }: GetQuoteModalProps) {
     setImages((prev) => prev.filter((_, i) => i !== index))
   }
 
+  // Send confirmation email to client
+  const sendConfirmationEmail = async (quoteData: Omit<QuoteRequest, 'id' | 'created_at'>) => {
+    const emailHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="background: linear-gradient(135deg, #ea580c, #dc2626); color: white; padding: 30px; border-radius: 12px; text-align: center; margin-bottom: 30px;">
+          <h1 style="margin: 0; font-size: 28px; font-weight: bold;">Quote Request Confirmation</h1>
+          <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;">Denwa Innovation Construction Company</p>
+        </div>
+
+        <div style="background: #f9fafb; padding: 25px; border-radius: 8px; margin-bottom: 25px;">
+          <h2 style="color: #1f2937; margin-bottom: 20px;">Dear ${quoteData.name},</h2>
+          <p style="color: #374151; line-height: 1.6; margin-bottom: 15px;">
+            Thank you for your interest in Denwa Innovation Construction Company! We have received your quote request and our team is reviewing your project details.
+          </p>
+          <p style="color: #374151; line-height: 1.6; margin-bottom: 15px;">
+            <strong>What happens next:</strong>
+          </p>
+          <ul style="color: #374151; line-height: 1.8; padding-left: 20px;">
+            <li>Our experts will review your project requirements</li>
+            <li>We'll prepare a detailed, customized quote</li>
+            <li>You'll receive our response within 24 hours</li>
+            <li>We'll schedule a consultation if needed</li>
+          </ul>
+        </div>
+
+        <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin-bottom: 25px;">
+          <h3 style="color: #ea580c; margin-bottom: 15px;">Your Project Summary:</h3>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr><td style="padding: 8px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;"><strong>Project Type:</strong></td><td style="padding: 8px 0; color: #1f2937; border-bottom: 1px solid #f3f4f6;">${quoteData.project_type || 'Not specified'}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;"><strong>Location:</strong></td><td style="padding: 8px 0; color: #1f2937; border-bottom: 1px solid #f3f4f6;">${quoteData.project_location}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;"><strong>Budget Range:</strong></td><td style="padding: 8px 0; color: #1f2937; border-bottom: 1px solid #f3f4f6;">${quoteData.budget || 'To be discussed'}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;"><strong>Timeline:</strong></td><td style="padding: 8px 0; color: #1f2937; border-bottom: 1px solid #f3f4f6;">${quoteData.timeline || 'Flexible'}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b7280;"><strong>Phone:</strong></td><td style="padding: 8px 0; color: #1f2937;">${quoteData.phone}</td></tr>
+          </table>
+        </div>
+
+        <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin-bottom: 25px;">
+          <p style="margin: 0; color: #92400e; font-weight: 500;">
+            💡 <strong>Pro Tip:</strong> Have your site plans, reference images, or specific requirements ready for our consultation call!
+          </p>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 25px;">
+          <p style="color: #374151; margin-bottom: 15px;">Questions? Contact us directly:</p>
+          <p style="color: #ea580c; font-weight: 600; font-size: 18px; margin: 5px 0;">📞 +254 717 671 843</p>
+          <p style="color: #ea580c; font-weight: 600; margin: 5px 0;">✉️ calebmuchiri04@gmail.com</p>
+        </div>
+
+        <div style="background: #1f2937; color: white; padding: 20px; border-radius: 8px; text-align: center;">
+          <p style="margin: 0 0 10px 0; font-size: 14px; opacity: 0.8;">Denwa Innovation Construction Company</p>
+          <p style="margin: 0; font-size: 12px; opacity: 0.6;">Building Dreams with Precision, Quality, and 15+ Years of Experience</p>
+        </div>
+      </div>
+    `
+
+    const response = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        to: quoteData.email,
+        subject: '🏗️ Quote Request Confirmation - Denwa Innovation Construction',
+        html: emailHtml,
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to send confirmation email')
+    }
+
+    return response.json()
+  }
+
+  // Send notification email to admin about new quote request
+  const sendAdminNotification = async (quoteData: Omit<QuoteRequest, 'id' | 'created_at'>) => {
+    const servicesText = quoteData.services_needed?.length ? 
+      quoteData.services_needed.join(', ') : 'None selected'
+    
+    const adminEmailHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 20px;">
+        <div style="background: linear-gradient(135deg, #1f2937, #374151); color: white; padding: 25px; border-radius: 12px; text-align: center; margin-bottom: 25px;">
+          <h1 style="margin: 0; font-size: 24px; font-weight: bold;">🚨 New Quote Request</h1>
+          <p style="margin: 10px 0 0 0; font-size: 14px; opacity: 0.9;">Denwa Innovation Construction - Admin Portal</p>
+        </div>
+
+        <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+          <h2 style="color: #ea580c; margin-bottom: 15px;">Client Information</h2>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr><td style="padding: 8px 0; color: #374151; font-weight: 600; width: 140px;">Name:</td><td style="padding: 8px 0; color: #1f2937;">${quoteData.name}</td></tr>
+            <tr><td style="padding: 8px 0; color: #374151; font-weight: 600;">Email:</td><td style="padding: 8px 0; color: #1f2937;">${quoteData.email || 'Not provided'}</td></tr>
+            <tr><td style="padding: 8px 0; color: #374151; font-weight: 600;">Phone:</td><td style="padding: 8px 0; color: #1f2937; font-weight: 600;">${quoteData.phone}</td></tr>
+            <tr><td style="padding: 8px 0; color: #374151; font-weight: 600;">Location:</td><td style="padding: 8px 0; color: #1f2937;">${quoteData.project_location}</td></tr>
+          </table>
+        </div>
+
+        <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <h3 style="color: #ea580c; margin-bottom: 15px;">Project Details</h3>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr><td style="padding: 8px 0; color: #374151; font-weight: 600; width: 140px;">Project Type:</td><td style="padding: 8px 0; color: #1f2937;">${quoteData.project_type || 'Not specified'}</td></tr>
+            <tr><td style="padding: 8px 0; color: #374151; font-weight: 600;">Budget:</td><td style="padding: 8px 0; color: #1f2937;">${quoteData.budget || 'To be discussed'}</td></tr>
+            <tr><td style="padding: 8px 0; color: #374151; font-weight: 600;">Timeline:</td><td style="padding: 8px 0; color: #1f2937;">${quoteData.timeline || 'Flexible'}</td></tr>
+            <tr><td style="padding: 8px 0; color: #374151; font-weight: 600;">Property Size:</td><td style="padding: 8px 0; color: #1f2937;">${quoteData.property_size || 'Not specified'}</td></tr>
+          </table>
+          
+          <h4 style="color: #374151; margin: 20px 0 10px 0;">Project Description:</h4>
+          <p style="background: #f9fafb; padding: 15px; border-radius: 6px; color: #1f2937; line-height: 1.6; margin: 0;">
+            ${quoteData.description}
+          </p>
+          
+          <h4 style="color: #374151; margin: 20px 0 10px 0;">Services Requested:</h4>
+          <p style="background: #fef3c7; padding: 15px; border-radius: 6px; color: #92400e; margin: 0;">
+            ${servicesText}
+          </p>
+          
+          ${quoteData.additional_info ? `
+            <h4 style="color: #374151; margin: 20px 0 10px 0;">Additional Information:</h4>
+            <p style="background: #f0f9ff; padding: 15px; border-radius: 6px; color: #0c4a6e; line-height: 1.6; margin: 0;">
+              ${quoteData.additional_info}
+            </p>
+          ` : ''}
+        </div>
+
+        <div style="background: #dc2626; color: white; padding: 20px; border-radius: 8px; text-align: center;">
+          <p style="margin: 0 0 10px 0; font-size: 16px; font-weight: 600;">⏰ Action Required</p>
+          <p style="margin: 0; font-size: 14px; opacity: 0.9;">Please respond to ${quoteData.name} within 24 hours at ${quoteData.phone}</p>
+        </div>
+      </div>
+    `
+
+    const response = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        to: 'calebmuchiri04@gmail.com', // Admin email
+        subject: `🚨 New Quote Request from ${quoteData.name} - ${quoteData.project_type || 'Construction Project'}`,
+        html: adminEmailHtml,
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to send admin notification email')
+    }
+
+    return response.json()
+  }
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    try {
+      const formData = new FormData(event.currentTarget)
+      
+      // Collect selected services
+      const services: string[] = []
+      const servicesCheckboxes = event.currentTarget.querySelectorAll('input[name="services"]:checked') as NodeListOf<HTMLInputElement>
+      servicesCheckboxes.forEach(checkbox => {
+        services.push(checkbox.value)
+      })
 
-    toast({
-      title: "Quote request submitted!",
-      description: "We'll get back to you within 24 hours with a detailed quote.",
-    })
+      // Prepare quote request data
+      const quoteRequest: Omit<QuoteRequest, 'id' | 'created_at'> = {
+        name: formData.get('fullName') as string,
+        email: formData.get('email') as string,
+        phone: formData.get('phone') as string,
+        project_type: formData.get('projectType') as string,
+        project_location: formData.get('location') as string,
+        budget: formData.get('budget') as string,
+        timeline: formData.get('timeline') as string,
+        property_size: formData.get('propertySize') as string,
+        description: formData.get('description') as string,
+        services_needed: services,
+        additional_info: formData.get('additionalInfo') as string,
+      }
 
-    setIsSubmitting(false)
-    setOpen(false)
+      // Validate required fields
+      if (!quoteRequest.name || !quoteRequest.phone || !quoteRequest.description) {
+        toast({
+          title: "Missing required fields",
+          description: "Please fill in your name, phone number, and project description.",
+          variant: "destructive",
+        })
+        setIsSubmitting(false)
+        return
+      }
 
-    // Reset form
-    event.currentTarget.reset()
-    setImages([])
+      // Check if Supabase is properly configured
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+      if (!supabaseUrl || supabaseUrl.includes('your_supabase')) {
+        console.warn('Supabase not configured - simulating form submission')
+        
+        // Simulate successful submission for development
+        await new Promise(resolve => setTimeout(resolve, 1500))
+        
+        // Send demo emails
+        try {
+          // Send confirmation email to client if email provided
+          if (quoteRequest.email) {
+            await sendConfirmationEmail(quoteRequest)
+          }
+          
+          // Send notification email to admin
+          await sendAdminNotification(quoteRequest)
+        } catch (emailError) {
+          console.error('Demo email sending failed:', emailError)
+        }
+        
+        toast({
+          title: "🎉 Quote Request Submitted! (Demo Mode)",
+          description: "Form submission successful. Check your email for confirmation. Configure Supabase to save data permanently.",
+        })
+        
+        setIsSubmitting(false)
+        setOpen(false)
+        event.currentTarget.reset()
+        setImages([])
+        
+        // Reload page after delay in demo mode too
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000)
+        return
+      }
+
+      // Save to Supabase
+      const { data, error } = await supabase
+        .from('quotes')
+        .insert([quoteRequest])
+        .select()
+
+      if (error) {
+        console.error('Supabase error:', error)
+        toast({
+          title: "Submission failed",
+          description: "There was an error submitting your quote request. Please try again.",
+          variant: "destructive",
+        })
+        setIsSubmitting(false)
+        return
+      }
+
+      // Success - Send emails (confirmation to client, notification to admin)
+      try {
+        // Send confirmation email to client if email provided
+        if (quoteRequest.email) {
+          await sendConfirmationEmail(quoteRequest)
+        }
+        
+        // Send notification email to admin
+        await sendAdminNotification(quoteRequest)
+      } catch (emailError) {
+        console.error('Email sending failed:', emailError)
+        // Don't fail the entire process if email fails
+      }
+
+      // Show success toast with enhanced messaging
+      toast({
+        title: "🎉 Quote Request Submitted Successfully!",
+        description: "Thank you! We'll review your request and get back to you within 24 hours. Check your email for confirmation.",
+      })
+
+      // Close modal and reset form
+      setIsSubmitting(false)
+      setOpen(false)
+      event.currentTarget.reset()
+      setImages([])
+
+      // Reload page after a short delay to let user see the success message
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
+      
+    } catch (error) {
+      console.error('Unexpected error:', error)
+      toast({
+        title: "Submission failed",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      })
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -90,19 +358,44 @@ export function GetQuoteModal({ children }: GetQuoteModalProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="fullName">Full Name *</Label>
-              <Input id="fullName" name="fullName" required />
+              <Input 
+                id="fullName" 
+                name="fullName" 
+                placeholder="Enter your full name"
+                required 
+                className="transition-all duration-200 focus:ring-2 focus:ring-orange-500/20"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">Phone Number *</Label>
-              <Input id="phone" name="phone" type="tel" placeholder="+254 700 000 000" required />
+              <Input 
+                id="phone" 
+                name="phone" 
+                type="tel" 
+                placeholder="+254 700 000 000" 
+                required 
+                className="transition-all duration-200 focus:ring-2 focus:ring-orange-500/20"
+              />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email Address *</Label>
-              <Input id="email" name="email" type="email" required />
+              <Label htmlFor="email">Email Address</Label>
+              <Input 
+                id="email" 
+                name="email" 
+                type="email" 
+                placeholder="your.email@example.com"
+                className="transition-all duration-200 focus:ring-2 focus:ring-orange-500/20"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="location">Project Location *</Label>
-              <Input id="location" name="location" placeholder="e.g., Nairobi, Westlands" required />
+              <Input 
+                id="location" 
+                name="location" 
+                placeholder="e.g., Nairobi, Westlands" 
+                required 
+                className="transition-all duration-200 focus:ring-2 focus:ring-orange-500/20"
+              />
             </div>
           </div>
 
@@ -175,7 +468,7 @@ export function GetQuoteModal({ children }: GetQuoteModalProps) {
                 id="description"
                 name="description"
                 placeholder="Please describe your project in detail. Include number of rooms, floors, specific requirements, materials preferences, etc."
-                className="min-h-[100px]"
+                className="min-h-[120px] transition-all duration-200 focus:ring-2 focus:ring-orange-500/20 resize-none"
                 required
               />
             </div>
@@ -267,16 +560,26 @@ export function GetQuoteModal({ children }: GetQuoteModalProps) {
               id="additionalInfo"
               name="additionalInfo"
               placeholder="Any specific requirements, concerns, or questions you'd like us to address?"
-              className="min-h-[80px]"
+              className="min-h-[80px] transition-all duration-200 focus:ring-2 focus:ring-orange-500/20 resize-none"
             />
           </div>
 
           {/* Submit Button */}
-          <div className="flex justify-end gap-4 pt-4">
-            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+          <div className="flex justify-end gap-4 pt-6 border-t border-border">
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={() => setOpen(false)}
+              disabled={isSubmitting}
+              className="transition-all duration-200 hover:bg-gray-50"
+            >
               Cancel
             </Button>
-            <Button type="submit" disabled={isSubmitting} className="min-w-[120px]">
+            <Button 
+              type="submit" 
+              disabled={isSubmitting} 
+              className="min-w-[140px] bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-orange-500/25"
+            >
               {isSubmitting ? (
                 <>
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
@@ -284,7 +587,7 @@ export function GetQuoteModal({ children }: GetQuoteModalProps) {
                 </>
               ) : (
                 <>
-                  <FileImage className="mr-2 h-4 w-4" />
+                  <Calculator className="mr-2 h-4 w-4" />
                   Get Quote
                 </>
               )}

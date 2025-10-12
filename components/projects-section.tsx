@@ -12,84 +12,105 @@ const projects = [
     category: "Residential",
     location: "Limuru, Kiambu",
     year: "2024",
-    image: "/School-Labaratory.jpg",
+    image: "/Limuru 3 Bedroom/1.jpg",
     images: [
-      "/School-Labaratory.jpg",
-      "/lab-exterior-finishing.jpg",
-      "/project-initiation.jpg"
+      "/Limuru 3 Bedroom/2.jpg",
+      "/Limuru 3 Bedroom/3.jpg",
+      "/Limuru 3 Bedroom/4.jpg"
     ],
     description:
       "A modern 3-bedroom house in Limuru featuring sustainable design and smart building technology.",
   },
   {
-    title: "Karen Luxury Villas",
-    category: "Residential",
-    location: "Karen, Nairobi",
-    year: "2023",
-    image: "/luxury-modern-house-with-large-windows-and-landsca.jpg",
-    images: [
-      "/luxury-modern-house-with-large-windows-and-landsca.jpg",
-      "/modern-residential-estate-kenya.jpg",
-      "/construction-site-with-cranes-and-buildings-under-.jpg"
-    ],
-    description: "Exclusive gated community of 24 luxury villas with modern amenities and landscaped gardens.",
-    value: "KSh 1.2B",
-  },
-  {
-    title: "Mombasa Port Warehouse",
-    category: "Industrial",
-    location: "Mombasa",
-    year: "2022",
-    image: "/large-industrial-warehouse-construction-site.jpg",
-    images: [
-      "/large-industrial-warehouse-construction-site.jpg",
-      "/professional-construction-team-at-work-site-wearin.jpg",
-      "/construction-site-with-cranes-and-buildings-under-.jpg"
-    ],
-    description: "A state-of-the-art cargo handling facility at Mombasa Port with advanced logistics systems.",
-    value: "KSh 650M",
-  },
-  {
-    title: "Kisumu Shopping Mall",
+    title: "Mary Immaculate",
     category: "Commercial",
-    location: "Kisumu",
-    year: "2022",
-    image: "/historic-brick-building-renovation-before-and-afte.jpg",
+    location: "Nyeri,Kenya",
+    year: "2023",
+    image: "/Mary Immaculate/1.jpg",
     images: [
-      "/historic-brick-building-renovation-before-and-afte.jpg",
-      "/modern-glass-office.png",
-      "/construction-site-with-cranes-and-buildings-under-.jpg"
+      "/Mary Immaculate/2.jpg",
+      "/Mary Immaculate/3.jpg",
+      "/Mary Immaculate/4.jpg",
+      "/Mary Immaculate/5.jpg",
+      "/Mary Immaculate/6.jpg",
+      "/Mary Immaculate/7.jpg",
+      "/Mary Immaculate/8.jpg",
+      "/Mary Immaculate/9.jpg",
+
+      
     ],
-    description: "A modern 3-level shopping mall with 150 retail spaces and entertainment facilities.",
-    value: "KSh 900M",
+    description: "Mary Immaculate school.",
+    // value: "KSh 1.2B",
   },
   {
-    title: "Nakuru Residential Estate",
+    title: "Gate house at Kimbo",
     category: "Residential",
-    location: "Nakuru",
-    year: "2023",
-    image: "/modern-residential-estate-kenya.jpg",
+    location: "Ruiru,Kimbo",
+    year: "2022",
+    image: "/Gate House Kimbo/1.jpg",
     images: [
-      "/modern-residential-estate-kenya.jpg",
-      "/luxury-modern-house-with-large-windows-and-landsca.jpg",
-      "/professional-construction-team-at-work-site-wearin.jpg"
+      "/Gate House Kimbo/2.jpg",
+      "/Gate House Kimbo/3.jpg",
+      "/Gate House Kimbo/4.jpg"
     ],
-    description: "Affordable housing project with 200 units featuring modern design and community amenities.",
-    value: "KSh 400M",
+    description: "Gate House at Kimbo Ruiru.",
+    // value: "KSh 650M",
   },
   {
-    title: "Eldoret Hospital Wing",
-    category: "Healthcare",
-    location: "Eldoret",
-    year: "2023",
-    image: "/modern-hospital-building-kenya.jpg",
+    title: "Riara Ridge Estate 3 Bedroom House",
+    category: "Residential",
+    location: "Limuru, Ridge Estate",
+    year: "2022",
+    image: "/Riara Ridge Estate/1.jpg",
     images: [
-      "/modern-hospital-building-kenya.jpg",
-      "/construction-site-with-cranes-and-buildings-under-.jpg",
-      "/professional-construction-team-at-work-site-wearin.jpg"
+      "/Riara Ridge Estate/2.jpg",
+      "/Riara Ridge Estate/3.jpg",
+      "/Riara Ridge Estate/4.jpg"
     ],
-    description: "New 5-story medical facility with advanced equipment and patient-centered design.",
-    value: "KSh 750M",
+    description: "A modern 3-Bedroom House.",
+    // value: "KSh 900M",
+  },
+  {
+    title: "Perimeter Wall and Gate Limuru",
+    category: "Residential",
+    location: "Limuru",
+    year: "2023",
+    image: "/Perimeter Wall Limuru/1.jpg",
+    images: [
+      "/Perimeter Wall Limuru/2.jpg",
+      "/Perimeter Wall Limuru/3.jpg",
+      "/Perimeter Wall Limuru/4.jpg"
+    ],
+    description: "Perimeter Wall and Gate Limuru.",
+    // value: "KSh 400M",
+  },
+  {
+    title: "Perimeter Wall and Gate Kimbo",
+    category: "Residential",
+    location: "Ruiru,Kimbo",
+    year: "2023",
+    image: "/Kimbo Perimeter wall/1.jpg",
+    images: [
+      "/Kimbo Perimeter wall/2.jpg",
+      "/Kimbo Perimeter wall/3.jpg",
+      "/Kimbo Perimeter wall/4.jpg"
+    ],
+    description: "Perimeter Wall and Gate Kimbo.",
+    // value: "KSh 400M",
+  },
+  {
+    title: "Highland Scaping",
+    category: "Residential",
+    location: "Nyeri",
+    year: "2023",
+    image: "/Highlands Scaping/1.jpg",
+    images: [
+      "/Highlands Scaping/2.jpg",
+      "/Highlands Scaping/3.jpg",
+      "/Highlands Scaping/4.jpg"
+    ],
+    description: "land scaping at highlands.",
+    // value: "KSh 750M",
   },
 ]
 

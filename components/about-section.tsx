@@ -35,7 +35,7 @@ export function AboutSection() {
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight font-inter">
                 Building Your Dreams with Precision and Quality,
                 <br />
-                <span className="text-orange-600"> One Project at a Time</span>
+                <span className="text-blue-600"> One Project at a Time</span>
               </h2>
               
               <div className="w-16 h-1 bg-gradient-to-r from-orange-600 to-orange-500 rounded-full"></div>
