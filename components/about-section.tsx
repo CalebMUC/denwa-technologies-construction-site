@@ -118,7 +118,7 @@ export function AboutSection() {
               className="absolute -top-4 -left-4 bg-white p-4 rounded-2xl shadow-lg border border-gray-100"
             >
               <div className="text-center">
-                <div className="text-lg font-bold text-gray-900 font-inter">20+</div>
+                <div className="text-lg font-bold text-gray-900 font-inter">10+</div>
                 <div className="text-xs text-gray-600 font-medium">Projects</div>
               </div>
             </motion.div>

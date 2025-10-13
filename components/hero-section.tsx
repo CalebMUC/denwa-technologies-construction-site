@@ -12,9 +12,7 @@ function useCountUp(target: number, start: number = 0, duration: number = 2000, 
 
   useEffect(() => {
     if (!trigger) return
-
     let startTime: number | null = null
-
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp
       const progress = Math.min((timestamp - startTime) / duration, 1)
@@ -22,7 +20,6 @@ function useCountUp(target: number, start: number = 0, duration: number = 2000, 
       setCount(current)
       if (progress < 1) requestAnimationFrame(animate)
     }
-
     requestAnimationFrame(animate)
   }, [target, duration, trigger])
 
@@ -41,26 +38,28 @@ export function HeroSection() {
   }, [isInView, controls])
 
   // Counters
-  const projects = useCountUp(20, 0, 2500, isInView)
+  const projects = useCountUp(10, 0, 2500, isInView)
   const years = useCountUp(5, 0, 2000, isInView)
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative h-screen flex items-center justify-center overflow-hidden pt-24 pb-16">
       {/* 🏗 Background with Parallax Zoom */}
       <motion.div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat will-change-transform"
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat will-change-transform"
         style={{
           backgroundImage: `url('/construction-site-with-cranes-and-buildings-under-.jpg')`,
         }}
         initial={{ scale: 1, opacity: 0.9 }}
-        animate={{ scale: 1.1, opacity: 1 }}
+        animate={{ scale: 1.05, opacity: 1 }}
         transition={{ duration: 10, ease: "easeOut" }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 via-gray-900/60 to-gray-900/80" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+        {/* Softer gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/60 via-gray-900/40 to-gray-900/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
       </motion.div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+      {/* 🧱 Text Content */}
+      <div className="relative z-20 max-w-5xl mx-auto px-6 text-center mt-8">
         <motion.div
           initial="hidden"
           animate={controls}
@@ -78,7 +77,7 @@ export function HeroSection() {
             }}
             initial="hidden"
             animate="visible"
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight font-inter tracking-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight font-inter tracking-tight drop-shadow-[0_3px_6px_rgba(0,0,0,0.6)]"
           >
             Denwa Innovation
             <br />
@@ -110,8 +109,8 @@ export function HeroSection() {
             animate="visible"
             className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed font-medium"
           >
-            Building your Dreams with precision, quality, and 5+ years of trusted expertise. From concept to
-            completion, we deliver excellence.
+            Building your dreams with precision, quality, and over 5 years of trusted expertise. 
+            From concept to completion, we deliver excellence.
           </motion.p>
 
           {/* 🎯 Buttons */}
@@ -179,8 +178,8 @@ export function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/50 to-transparent"></div>
+      {/* Bottom fade (reduced height to prevent text cover) */}
+      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/40 to-transparent"></div>
     </section>
   )
 }
