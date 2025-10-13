@@ -10,6 +10,7 @@ const projects = [
   {
     title: "Limuru 3 Bedroom House",
     category: "Residential",
+    status: "Ongoing",
     location: "Limuru, Kiambu",
     year: "2024",
     image: "/Limuru 3 Bedroom/1.jpg",
@@ -24,6 +25,7 @@ const projects = [
   {
     title: "Mary Immaculate",
     category: "Commercial",
+    status: "Completed",
     location: "Nyeri,Kenya",
     year: "2023",
     image: "/Mary Immaculate/1.jpg",
@@ -46,6 +48,7 @@ const projects = [
     title: "Gate house at Kimbo",
     category: "Residential",
     location: "Ruiru,Kimbo",
+    status: "Completed",
     year: "2022",
     image: "/Gate House Kimbo/1.jpg",
     images: [
@@ -59,6 +62,7 @@ const projects = [
   {
     title: "Riara Ridge Estate 3 Bedroom House",
     category: "Residential",
+    status: "Ongoing",
     location: "Limuru, Ridge Estate",
     year: "2022",
     image: "/Riara Ridge Estate/1.jpg",
@@ -74,6 +78,7 @@ const projects = [
     title: "Perimeter Wall and Gate Limuru",
     category: "Residential",
     location: "Limuru",
+    status: "Ongoing",
     year: "2023",
     image: "/Perimeter Wall Limuru/1.jpg",
     images: [
@@ -87,13 +92,14 @@ const projects = [
   {
     title: "Perimeter Wall and Gate Kimbo",
     category: "Residential",
+    status: "Completed",
     location: "Ruiru,Kimbo",
     year: "2023",
     image: "/Kimbo Perimeter wall/1.jpg",
     images: [
+      "/Kimbo Perimeter wall/1.jpg",
       "/Kimbo Perimeter wall/2.jpg",
-      "/Kimbo Perimeter wall/3.jpg",
-      "/Kimbo Perimeter wall/4.jpg"
+      "/Kimbo Perimeter wall/3.jpg"
     ],
     description: "Perimeter Wall and Gate Kimbo.",
     // value: "KSh 400M",
@@ -102,6 +108,7 @@ const projects = [
     title: "Highland Scaping",
     category: "Residential",
     location: "Nyeri",
+    status: "Completed",
     year: "2023",
     image: "/Highlands Scaping/1.jpg",
     images: [
@@ -301,7 +308,7 @@ export function ProjectsSection() {
             Our Projects <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Across Kenya</span>
           </h2>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Explore our diverse portfolio — from urban developments to sustainable housing projects — shaping Kenya’s modern landscape.
+            Ongoing and completed projects showcasing our expertise in residential, commercial, and infrastructure construction.
           </p>
         </motion.div>
 

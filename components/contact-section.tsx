@@ -11,11 +11,7 @@ import { submitContactForm } from "@/app/actions/contact"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
 const contactInfo = [
-  {
-    icon: MapPin,
-    title: "Head Office",
-    details: "Westlands Square, Westlands Road, Nairobi, Kenya",
-  },
+
   {
     icon: Phone,
     title: "Phone",
@@ -67,30 +63,7 @@ export function ContactSection() {
       </div>
 
       <div className="max-w-6xl mx-auto px-8 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 text-balance font-inter">
-            Get In
-            <span className="text-orange-600"> Touch</span>
-          </h2>
-          <div className="flex justify-center mb-6">
-            <div className="w-16 h-1 bg-gradient-to-r from-orange-600 to-orange-500 rounded-full"></div>
-          </div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Ready to start your construction project in Kenya? Contact us today for expert consultation and competitive quotes.
-          </p>
-          <div className="mt-8">
-            <GetQuoteModal>
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white px-8 py-3 text-base font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-              >
-                <Calculator className="mr-3 h-5 w-5" />
-                Get Instant Quote
-              </Button>
-            </GetQuoteModal>
-          </div>
-        </div>
-
+         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
           <Card className="bg-card border-border">
@@ -214,7 +187,7 @@ export function ContactSection() {
               </div>
             </div>
 
-            <Card className="bg-card border-border">
+            {/* <Card className="bg-card border-border">
               <CardContent className="p-6">
                 <h4 className="font-semibold text-foreground mb-3">24/7 Emergency Services</h4>
                 <p className="text-muted-foreground mb-4 text-pretty">
@@ -228,24 +201,7 @@ export function ContactSection() {
                   Emergency Line: +254 717 671 843
                 </Button>
               </CardContent>
-            </Card>
-
-            <Card className="bg-card border-border">
-              <CardContent className="p-6">
-                <h4 className="font-semibold text-foreground mb-3">Regional Offices</h4>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <p>
-                    <strong>Mombasa:</strong> Moi Avenue, Mombasa
-                  </p>
-                  <p>
-                    <strong>Kisumu:</strong> Oginga Odinga Street, Kisumu
-                  </p>
-                  <p>
-                    <strong>Nakuru:</strong> Kenyatta Avenue, Nakuru
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+            </Card> */}
           </div>
         </div>
       </div>

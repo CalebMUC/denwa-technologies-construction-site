@@ -5,8 +5,8 @@ import { CheckCircle } from "lucide-react"
 import { motion } from "framer-motion"
 
 const achievements = [
-  "20+ Successful Projects Across Kenya",
-  "5+ Years of Local Experience",
+  "10+ Successful Projects Across Kenya",
+  "Combined team experience over 2 decades",
   "Licensed by National Construction Authority",
   "Award-Winning Kenyan Construction Team",
   "Expertise in Local Building Codes",

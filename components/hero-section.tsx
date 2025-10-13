@@ -74,8 +74,10 @@ export function HeroSection() {
           <motion.h1
             variants={{
               hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2 } },
             }}
+            initial="hidden"
+            animate="visible"
             className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight font-inter tracking-tight"
           >
             Denwa Innovation
@@ -89,8 +91,10 @@ export function HeroSection() {
           <motion.div
             variants={{
               hidden: { opacity: 0, scale: 0.9 },
-              visible: { opacity: 1, scale: 1 },
+              visible: { opacity: 1, scale: 1, transition: { duration: 0.6, delay: 0.4 } },
             }}
+            initial="hidden"
+            animate="visible"
             className="flex justify-center"
           >
             <div className="w-24 h-1 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full"></div>
@@ -100,11 +104,13 @@ export function HeroSection() {
           <motion.p
             variants={{
               hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.6 } },
             }}
+            initial="hidden"
+            animate="visible"
             className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed font-medium"
           >
-            Building your Dreams with precision, quality, and 15+ years of trusted expertise. From concept to
+            Building your Dreams with precision, quality, and 5+ years of trusted expertise. From concept to
             completion, we deliver excellence.
           </motion.p>
 
@@ -112,8 +118,10 @@ export function HeroSection() {
           <motion.div
             variants={{
               hidden: { opacity: 0, y: 30 },
-              visible: { opacity: 1, y: 0 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.8 } },
             }}
+            initial="hidden"
+            animate="visible"
             className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-4"
           >
             <GetQuoteModal>
@@ -141,8 +149,10 @@ export function HeroSection() {
             ref={ref}
             variants={{
               hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 1.0 } },
             }}
+            initial="hidden"
+            animate="visible"
             className="pt-12"
           >
             <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-white/80">
