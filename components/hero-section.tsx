@@ -42,7 +42,7 @@ export function HeroSection() {
   const years = useCountUp(5, 0, 2000, isInView)
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden pt-24 pb-16">
+    <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-24 pb-16">
       {/* 🏗 Background with Parallax Zoom */}
       <motion.div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat will-change-transform"

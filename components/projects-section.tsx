@@ -14,19 +14,14 @@ const projects = [
     location: "Limuru, Kiambu",
     year: "2024",
     image: "/Limuru 3 Bedroom/1.jpg",
-    images: [
-      "/Limuru 3 Bedroom/2.jpg",
-      "/Limuru 3 Bedroom/3.jpg",
-      "/Limuru 3 Bedroom/4.jpg"
-    ],
-    description:
-      "A modern 3-bedroom house in Limuru featuring sustainable design and smart building technology.",
+    images: ["/Limuru 3 Bedroom/2.jpg", "/Limuru 3 Bedroom/3.jpg", "/Limuru 3 Bedroom/4.jpg"],
+    description: "A modern 3-bedroom house in Limuru featuring sustainable design and smart building technology.",
   },
   {
     title: "Mary Immaculate",
     category: "Commercial",
     status: "Completed",
-    location: "Nyeri,Kenya",
+    location: "Nyeri, Kenya",
     year: "2023",
     image: "/Mary Immaculate/1.jpg",
     images: [
@@ -38,26 +33,18 @@ const projects = [
       "/Mary Immaculate/7.jpg",
       "/Mary Immaculate/8.jpg",
       "/Mary Immaculate/9.jpg",
-
-      
     ],
     description: "Mary Immaculate school.",
-    // value: "KSh 1.2B",
   },
   {
     title: "Gate house at Kimbo",
     category: "Residential",
-    location: "Ruiru,Kimbo",
+    location: "Ruiru, Kimbo",
     status: "Completed",
     year: "2022",
     image: "/Gate House Kimbo/1.jpg",
-    images: [
-      "/Gate House Kimbo/2.jpg",
-      "/Gate House Kimbo/3.jpg",
-      "/Gate House Kimbo/4.jpg"
-    ],
+    images: ["/Gate House Kimbo/2.jpg", "/Gate House Kimbo/3.jpg", "/Gate House Kimbo/4.jpg"],
     description: "Gate House at Kimbo Ruiru.",
-    // value: "KSh 650M",
   },
   {
     title: "Riara Ridge Estate 3 Bedroom House",
@@ -66,13 +53,8 @@ const projects = [
     location: "Limuru, Ridge Estate",
     year: "2022",
     image: "/Riara Ridge Estate/1.jpg",
-    images: [
-      "/Riara Ridge Estate/2.jpg",
-      "/Riara Ridge Estate/3.jpg",
-      "/Riara Ridge Estate/4.jpg"
-    ],
+    images: ["/Riara Ridge Estate/2.jpg", "/Riara Ridge Estate/3.jpg", "/Riara Ridge Estate/4.jpg"],
     description: "A modern 3-Bedroom House.",
-    // value: "KSh 900M",
   },
   {
     title: "Perimeter Wall and Gate Limuru",
@@ -84,25 +66,23 @@ const projects = [
     images: [
       "/Perimeter Wall Limuru/2.jpg",
       "/Perimeter Wall Limuru/3.jpg",
-      "/Perimeter Wall Limuru/4.jpg"
+      "/Perimeter Wall Limuru/4.jpg",
     ],
     description: "Perimeter Wall and Gate Limuru.",
-    // value: "KSh 400M",
   },
   {
     title: "Perimeter Wall and Gate Kimbo",
     category: "Residential",
     status: "Completed",
-    location: "Ruiru,Kimbo",
+    location: "Ruiru, Kimbo",
     year: "2023",
     image: "/Kimbo Perimeter wall/1.jpg",
     images: [
       "/Kimbo Perimeter wall/1.jpg",
       "/Kimbo Perimeter wall/2.jpg",
-      "/Kimbo Perimeter wall/3.jpg"
+      "/Kimbo Perimeter wall/3.jpg",
     ],
     description: "Perimeter Wall and Gate Kimbo.",
-    // value: "KSh 400M",
   },
   {
     title: "Highland Scaping",
@@ -114,53 +94,36 @@ const projects = [
     images: [
       "/Highlands Scaping/2.jpg",
       "/Highlands Scaping/3.jpg",
-      "/Highlands Scaping/4.jpg"
+      "/Highlands Scaping/4.jpg",
     ],
-    description: "land scaping at highlands.",
-    // value: "KSh 750M",
+    description: "Landscaping at Highlands.",
   },
 ]
 
 const slideVariants = {
-  enter: (direction: number) => ({
-    x: direction > 0 ? 1000 : -1000,
-    opacity: 0
-  }),
-  center: {
-    zIndex: 1,
-    x: 0,
-    opacity: 1
-  },
-  exit: (direction: number) => ({
-    zIndex: 0,
-    x: direction < 0 ? 1000 : -1000,
-    opacity: 0
-  })
+  enter: (direction: number) => ({ x: direction > 0 ? 1000 : -1000, opacity: 0 }),
+  center: { zIndex: 1, x: 0, opacity: 1 },
+  exit: (direction: number) => ({ zIndex: 0, x: direction < 0 ? 1000 : -1000, opacity: 0 }),
 }
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30, scale: 0.95 },
-  visible: (i: number) => ({ 
-    opacity: 1, 
-    y: 0, 
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
     scale: 1,
-    transition: { duration: 0.5, delay: i * 0.1, ease: "easeOut" }
-  })
+    transition: { duration: 0.5, delay: i * 0.1, ease: "easeOut" },
+  }),
 }
 
 const modalVariants = {
   hidden: { opacity: 0, scale: 0.8 },
   visible: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.8 }
+  exit: { opacity: 0, scale: 0.8 },
 }
 
-function ProjectGalleryModal({ project, isOpen, onClose }: {
-  project: typeof projects[0]
-  isOpen: boolean
-  onClose: () => void
-}) {
+function ProjectGalleryModal({ project, isOpen, onClose }: any) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
-
   const nextImage = () => setCurrentImageIndex((prev) => (prev + 1) % project.images.length)
   const prevImage = () => setCurrentImageIndex((prev) => (prev - 1 + project.images.length) % project.images.length)
 
@@ -242,7 +205,7 @@ export function ProjectsSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [direction, setDirection] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null)
+  const [selectedProject, setSelectedProject] = useState<any>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [projectsPerSlide, setProjectsPerSlide] = useState(3)
 
@@ -285,7 +248,7 @@ export function ProjectsSection() {
     return projects.slice(start, start + projectsPerSlide)
   }
 
-  const openModal = (project: typeof projects[0]) => {
+  const openModal = (project: any) => {
     setSelectedProject(project)
     setIsModalOpen(true)
   }
@@ -335,7 +298,10 @@ export function ProjectsSection() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ x: { type: "spring", stiffness: 300, damping: 30 }, opacity: { duration: 0.2 } }}
+                transition={{
+                  x: { type: "spring", stiffness: 300, damping: 30 },
+                  opacity: { duration: 0.2 },
+                }}
                 className="absolute inset-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
               >
                 {getCurrentProjects().map((project, i) => (
@@ -350,6 +316,20 @@ export function ProjectsSection() {
                           alt={project.title}
                           className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
                         />
+
+                        {/* ✅ Status Badge */}
+                        <span
+                          className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-medium text-white ${
+                            project.status === "Completed"
+                              ? "bg-green-600"
+                              : project.status === "Ongoing"
+                              ? "bg-yellow-500"
+                              : "bg-gray-400"
+                          }`}
+                        >
+                          {project.status}
+                        </span>
+
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 flex items-center justify-center transition-all duration-300">
                           <Eye className="h-5 w-5 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
                         </div>
@@ -359,8 +339,12 @@ export function ProjectsSection() {
                           {project.title}
                         </h3>
                         <div className="flex items-center gap-3 mb-2 text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1"><MapPin className="h-3 w-3" />{project.location}</span>
-                          <span className="flex items-center gap-1"><Calendar className="h-3 w-3" />{project.year}</span>
+                          <span className="flex items-center gap-1">
+                            <MapPin className="h-3 w-3" /> {project.location}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" /> {project.year}
+                          </span>
                         </div>
                         <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3 mb-3">
                           {project.description}
@@ -412,7 +396,11 @@ export function ProjectsSection() {
 
       <AnimatePresence>
         {selectedProject && (
-          <ProjectGalleryModal project={selectedProject} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+          <ProjectGalleryModal
+            project={selectedProject}
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          />
         )}
       </AnimatePresence>
     </section>
