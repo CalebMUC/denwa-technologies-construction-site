@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/hero-section"
 import { AboutSection } from "@/components/about-section"
 import { ServicesSection } from "@/components/services-section"
 import { ProjectsSection } from "@/components/projects-section"
+import { WhyChooseUsSection } from "@/components/why-choose-us"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { ConsultationSection } from "@/components/consultation-section"
 import { ContactSection } from "@/components/contact-section"
@@ -17,6 +18,7 @@ export default function Home() {
       <AboutSection />
       <ServicesSection />
       <ProjectsSection />
+      <WhyChooseUsSection />
       <TestimonialsSection />
       <ConsultationSection />
       <ContactSection />
