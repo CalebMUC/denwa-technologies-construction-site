@@ -9,58 +9,40 @@ import { motion, AnimatePresence } from "framer-motion"
 
 const testimonials = [
   {
-    name: "David Kimani",
-    role: "Homeowner, Nairobi",
+    name: "Sister Margaret Wanjiku",
+    role: "School Administrator, Nyeri",
     content:
-      "Excellent work on our family home in Karen. The team was professional, completed on time, and the quality exceeded our expectations. Highly recommend for residential projects.",
+      "Denwa Innovation built our Mary Immaculate school facilities with exceptional attention to detail. The team understood our educational requirements perfectly and delivered a safe, modern learning environment for our students.",
     rating: 5,
-    project: "4-Bedroom Villa",
-    avatar: "DK",
+    project: "Mary Immaculate",
+    avatar: "MW",
   },
   {
-    name: "Sarah Wanjiku",
-    role: "Business Owner, Mombasa",
+    name: "James Kamau",
+    role: "Property Owner, Ruiru",
     content:
-      "They built our hotel in Diani and it's been a year with no issues. Great attention to detail and they understood our coastal construction requirements perfectly.",
+      "The gate house at Kimbo was completed exactly as we envisioned. Professional workmanship, quality materials, and they finished ahead of schedule. Our security and aesthetics improved significantly.",
     rating: 5,
-    project: "Boutique Hotel",
-    avatar: "SW",
+    project: "Gate House at Kimbo",
+    avatar: "JK",
   },
   {
-    name: "John Mwangi",
-    role: "Developer, Kisumu",
+    name: "Grace Wairimu",
+    role: "Homeowner, Ruiru",
     content:
-      "Professional team that delivered our apartment complex on budget and ahead of schedule. Their project management skills are outstanding.",
+      "Our perimeter wall and gate project in Kimbo exceeded expectations. Denwa Innovation provided excellent security solutions while maintaining the aesthetic appeal of our property. Highly recommend their services.",
     rating: 5,
-    project: "Residential Complex",
-    avatar: "JM",
+    project: "Perimeter Wall and Gate Kimbo",
+    avatar: "GW",
   },
   {
-    name: "Grace Achieng",
-    role: "School Administrator, Nakuru",
+    name: "Dr. Patrick Njoroge",
+    role: "Property Developer, Nyeri",
     content:
-      "Built our new school block with excellent craftsmanship. They worked around our schedule to minimize disruption to classes. Very satisfied with the results.",
+      "The Highland Scaping project transformed our landscape beautifully. Their landscaping expertise and attention to environmental sustainability made our property a standout. Professional team with great results.",
     rating: 5,
-    project: "Educational Facility",
-    avatar: "GA",
-  },
-  {
-    name: "Peter Ochieng",
-    role: "Factory Owner, Eldoret",
-    content:
-      "Constructed our manufacturing facility with all the technical requirements we needed. Great understanding of industrial construction standards.",
-    rating: 5,
-    project: "Industrial Facility",
-    avatar: "PO",
-  },
-  {
-    name: "Mary Njeri",
-    role: "Clinic Owner, Thika",
-    content:
-      "They renovated our medical clinic beautifully. Very clean work and they understood the specific needs of a healthcare facility.",
-    rating: 5,
-    project: "Medical Facility",
-    avatar: "MN",
+    project: "Highland Scaping",
+    avatar: "PN",
   },
 ]
 
@@ -166,8 +148,8 @@ export function TestimonialsSection() {
             </span>
           </h2>
           <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Hear from homeowners, developers, and business owners who trusted Denwa Innovation to deliver
-            excellence across Kenya’s construction landscape.
+            Real testimonials from satisfied clients of our <span className="font-semibold text-orange-600">completed projects</span>. 
+            Hear how Denwa Innovation delivered excellence across residential and commercial construction in Kenya.
           </p>
         </motion.div>
 

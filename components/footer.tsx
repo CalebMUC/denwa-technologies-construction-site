@@ -26,7 +26,7 @@ export function Footer() {
               <div className="w-10 h-10 bg-gradient-to-br from-orange-600 to-orange-700 rounded-xl flex items-center justify-center">
                 <Building2 className="h-5 w-5 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-white font-inter">Denwa Technologies</h3>
+              <h3 className="text-xl font-bold text-white font-inter">Denwa Innovations</h3>
             </div>
             
             <p className="text-gray-300 mb-6 max-w-md leading-relaxed text-sm">
