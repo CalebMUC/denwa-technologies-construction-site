@@ -6,97 +6,211 @@ import { ExternalLink, MapPin, Calendar, ChevronLeft, ChevronRight, X, Eye } fro
 import { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
+// Helper function to generate image arrays
+const generateImageArray = (basePath: string, count: number, startIndex: number = 1) => {
+  return Array.from({ length: count }, (_, i) => `${basePath}/${startIndex + i}.jpg`)
+}
+
+// Helper function to generate JPEG image arrays
+const generateJpegImageArray = (basePath: string, count: number, startIndex: number = 1) => {
+  return Array.from({ length: count }, (_, i) => `${basePath}/${startIndex + i}.jpeg`)
+}
+
+// Flexible helper function to generate image arrays with custom extension
+const generateImageArrayWithExtension = (basePath: string, count: number, extension: 'jpg' | 'jpeg' | 'png' | 'webp' = 'jpg', startIndex: number = 1) => {
+  return Array.from({ length: count }, (_, i) => `${basePath}/${startIndex + i}.${extension}`)
+}
+
+// Helper function to generate mixed extension image arrays
+const generateMixedImageArray = (basePath: string, imageConfig: Array<{index: number, extension: 'jpg' | 'jpeg' | 'png' | 'webp'}>) => {
+  return imageConfig.map(config => `${basePath}/${config.index}.${config.extension}`)
+}
+
+// Helper function for common mixed patterns (alternating JPEG/JPG)
+const generateAlternatingImageArray = (basePath: string, count: number, startIndex: number = 1, pattern: 'jpeg-first' | 'jpg-first' = 'jpeg-first') => {
+  return Array.from({ length: count }, (_, i) => {
+    const actualIndex = startIndex + i
+    const isFirstExtension = i % 2 === 0 // Use array index for alternating, not actual file number
+    const extension = pattern === 'jpeg-first' 
+      ? (isFirstExtension ? 'JPEG' : 'jpg') 
+      : (isFirstExtension ? 'jpg' : 'JPEG')
+    return `${basePath}/${actualIndex}.${extension}`
+  })
+}
+
+// Helper function that generates both extensions (browser will load whichever exists)
+const generateDualExtensionArray = (basePath: string, count: number, startIndex: number = 1, primaryExt: 'jpg' | 'jpeg' = 'jpg') => {
+  return Array.from({ length: count }, (_, i) => `${basePath}/${startIndex + i}.${primaryExt}`)
+}
+
 const projects = [
   {
-    title: "Limuru 3 Bedroom House",
-    category: "Residential",
-    status: "Ongoing",
-    location: "Limuru, Kiambu",
+    title: "Culvert Construction",
+    category: "Infrastructure",
+    status: "Completed",
+    location: "Kenya",
     year: "2024",
-    image: "/Limuru 3 Bedroom/1.jpg",
-    images: ["/Limuru 3 Bedroom/2.jpg", "/Limuru 3 Bedroom/3.jpg", "/Limuru 3 Bedroom/4.jpg"],
-    description: "A modern 3-bedroom house in Limuru featuring sustainable design and smart building technology.",
+    image: "projects done/CULVERT-complete/2.jpeg",
+    images: generateImageArrayWithExtension("projects done/CULVERT-complete", 2, 'jpeg', 1), // Generate 1.jpeg to 2.jpeg
+    description: "Professional culvert construction ensuring proper water drainage and infrastructure development.",
   },
   {
-    title: "Mary Immaculate",
+    title: "Highlands Landscaping",
+    category: "Residential",
+    status: "Completed",
+    location: "Nyeri",
+    year: "2023",
+    image: "projects done/higlands-landscaping-complete/7.jpg",
+    images: [
+      "projects done/higlands-landscaping-complete/1.jpeg",
+      "projects done/higlands-landscaping-complete/2.jpeg",
+      "projects done/higlands-landscaping-complete/3.jpeg",
+      "projects done/higlands-landscaping-complete/4.jpg",
+      "projects done/higlands-landscaping-complete/5.jpg",
+      "projects done/higlands-landscaping-complete/6.jpeg",
+      "projects done/higlands-landscaping-complete/7.jpg"
+    ], // Explicit JPEG image array
+    description: "Complete landscaping transformation at Highlands featuring modern garden design and sustainable practices.",
+  },
+  {
+    title: "Mansionate Speaker House",
+    category: "Residential",
+    status: "Completed",
+    location: "Nyeri",
+    year: "2024",
+    image: "projects done/mansionate-speaker-nyeri-complete/27.jpg",
+    images: generateImageArrayWithExtension("projects done/mansionate-speaker-nyeri-complete", 28, 'jpg', 1), // Generate 1.jpg to 28.jpg
+    description: "Luxurious mansion construction in Nyeri featuring modern architecture and premium finishes.",
+  },
+  {
+    title: "Nyeri Warehouse",
+    category: "Commercial",
+    status: "Completed",
+    location: "Nyeri",
+    year: "2024",
+    image: "projects done/Nyeri-ware-house-complete/31.jpg",
+    images: generateImageArrayWithExtension("projects done/Nyeri-ware-house-complete", 40, 'jpg', 1), // Generate 1.jpg to 40.jpg
+    description: "Large-scale warehouse construction providing modern storage solutions for commercial operations.",
+  },
+  {
+    title: "Perimeter Wall Kimbo",
+    category: "Residential",
+    status: "Completed",
+    location: "Ruiru, Kimbo",
+    year: "2023",
+    image: "projects done/peerimetre-kimbo-complete/16.jpeg",
+    images: [
+      "projects done/peerimetre-kimbo-complete/1.jpg",
+      "projects done/peerimetre-kimbo-complete/2.jpg",
+      "projects done/peerimetre-kimbo-complete/3.jpg",
+      "projects done/peerimetre-kimbo-complete/4.jpeg",
+      "projects done/peerimetre-kimbo-complete/5.jpeg",
+      "projects done/peerimetre-kimbo-complete/6.jpeg",
+      "projects done/peerimetre-kimbo-complete/7.jpeg",
+      "projects done/peerimetre-kimbo-complete/8.jpeg",
+      "projects done/peerimetre-kimbo-complete/9.jpeg",
+      "projects done/peerimetre-kimbo-complete/10.jpg",
+      "projects done/peerimetre-kimbo-complete/11.jpg",
+      "projects done/peerimetre-kimbo-complete/12.jpeg",
+      "projects done/peerimetre-kimbo-complete/13.jpeg",
+      "projects done/peerimetre-kimbo-complete/14.jpeg",
+      "projects done/peerimetre-kimbo-complete/15.jpeg",
+      "projects done/peerimetre-kimbo-complete/16.jpeg"
+    ], // Explicit JPG image array
+    description: "Secure perimeter wall construction in Kimbo ensuring property safety and boundary definition.",
+  },
+  {
+    title: "Perimeter Wall Limuru",
+    category: "Residential",
+    status: "Completed",
+    location: "Limuru",
+    year: "2023",
+    image: "projects done/perimetre-limuru-complete/12.jpeg",
+    images: [
+      "projects done/perimetre-limuru-complete/1.jpeg",
+      "projects done/perimetre-limuru-complete/2.jpeg",
+      // "projects done/perimetre-limuru-complete/3.jpg",
+      "projects done/perimetre-limuru-complete/4.jpg",
+      "projects done/perimetre-limuru-complete/5.jpg",
+      "projects done/perimetre-limuru-complete/6.jpeg",
+      "projects done/perimetre-limuru-complete/7.jpeg",
+      "projects done/perimetre-limuru-complete/8.jpeg",
+      "projects done/perimetre-limuru-complete/9.jpeg",
+      "projects done/perimetre-limuru-complete/10.jpeg",
+      "projects done/perimetre-limuru-complete/11.jpeg",
+      "projects done/perimetre-limuru-complete/12.jpeg"
+    ], // Explicit JPEG image array
+    description: "Professional perimeter wall installation in Limuru with modern gate integration.",
+  },
+  {
+    title: "Perimeter Wall Ruiru",
+    category: "Residential",
+    status: "Completed",
+    location: "Ruiru",
+    year: "2023",
+    image: "projects done/perimtre-ruiru-complete/11.jpeg",
+    images: [
+      "projects done/perimtre-ruiru-complete/1.jpeg",
+      "projects done/perimtre-ruiru-complete/2.jpg",
+      "projects done/perimtre-ruiru-complete/3.jpeg",
+      "projects done/perimtre-ruiru-complete/4.jpg",
+      "projects done/perimtre-ruiru-complete/5.jpg",
+      "projects done/perimtre-ruiru-complete/6.jpg",
+      "projects done/perimtre-ruiru-complete/7.jpg",
+      "projects done/perimtre-ruiru-complete/8.jpeg",
+      "projects done/perimtre-ruiru-complete/9.jpeg",
+      "projects done/perimtre-ruiru-complete/10.jpeg",
+      "projects done/perimtre-ruiru-complete/11.jpeg"
+    ], // Explicit mixed extensions
+    description: "Comprehensive perimeter wall construction in Ruiru ensuring security and aesthetic appeal.",
+  },
+  {
+    title: "Riara Ridge 3-Bedroom House",
+    category: "Residential",
+    status: "Ongoing",
+    location: "Limuru, Ridge Estate",
+    year: "2024",
+    image: "projects done/RIARA-RIDGE-3-bedroom-ongoing/18.jpeg",
+    images: generateImageArrayWithExtension("projects done/RIARA-RIDGE-3-bedroom-ongoing", 18, 'jpeg', 1), // Generate 1.jpeg to 18.jpeg
+    description: "Modern 3-bedroom house construction at Riara Ridge featuring contemporary design and quality finishes.",
+  },
+  {
+    title: "Steel Structure Nyeri",
+    category: "Industrial",
+    status: "Completed",
+    location: "Nyeri",
+    year: "2024",
+    image: "projects done/steel-structure-in-Nyeri-compl/1.jpg",
+    images: generateImageArrayWithExtension("projects done/steel-structure-in-Nyeri-compl", 7, 'jpg', 1), // Generate 1.jpg to 7.jpg
+    description: "Industrial steel structure construction in Nyeri providing robust framework for commercial operations.",
+  },
+  {
+    title: "Mary Immaculate School",
     category: "Commercial",
     status: "Completed",
     location: "Nyeri, Kenya",
     year: "2023",
-    image: "/Mary Immaculate/1.jpg",
-    images: [
-      "/Mary Immaculate/2.jpg",
-      "/Mary Immaculate/3.jpg",
-      "/Mary Immaculate/4.jpg",
-      "/Mary Immaculate/5.jpg",
-      "/Mary Immaculate/6.jpg",
-      "/Mary Immaculate/7.jpg",
-      "/Mary Immaculate/8.jpg",
-      "/Mary Immaculate/9.jpg",
-    ],
-    description: "Mary Immaculate school.",
+    image: "projects done/Mary-Immaculate/34.jpg",
+    images: generateImageArrayWithExtension("projects done/Mary-Immaculate", 34, 'jpg', 1), // Generate 1.jpg to 34.jpg
+    description: "Mary Immaculate primary school multi-story classrooms construction project.",
   },
   {
-    title: "Gate house at Kimbo",
+    title: "Gate House Kimbo",
     category: "Residential",
     location: "Ruiru, Kimbo",
     status: "Completed",
     year: "2022",
-    image: "/Gate House Kimbo/1.jpg",
-    images: ["/Gate House Kimbo/2.jpg", "/Gate House Kimbo/3.jpg", "/Gate House Kimbo/4.jpg"],
-    description: "Gate House at Kimbo Ruiru.",
-  },
-  {
-    title: "Riara Ridge Estate 3 Bedroom House",
-    category: "Residential",
-    status: "Ongoing",
-    location: "Limuru, Ridge Estate",
-    year: "2022",
-    image: "/Riara Ridge Estate/1.jpg",
-    images: ["/Riara Ridge Estate/2.jpg", "/Riara Ridge Estate/3.jpg", "/Riara Ridge Estate/4.jpg"],
-    description: "A modern 3-Bedroom House.",
-  },
-  {
-    title: "Perimeter Wall and Gate Limuru",
-    category: "Residential",
-    location: "Limuru",
-    status: "Ongoing",
-    year: "2023",
-    image: "/Perimeter Wall Limuru/1.jpg",
+    image: "projects done/Gate-House-Kimbo-complete/7.jpeg",
     images: [
-      "/Perimeter Wall Limuru/2.jpg",
-      "/Perimeter Wall Limuru/3.jpg",
-      "/Perimeter Wall Limuru/4.jpg",
-    ],
-    description: "Perimeter Wall and Gate Limuru.",
-  },
-  {
-    title: "Perimeter Wall and Gate Kimbo",
-    category: "Residential",
-    status: "Completed",
-    location: "Ruiru, Kimbo",
-    year: "2023",
-    image: "/Kimbo Perimeter wall/1.jpg",
-    images: [
-      "/Kimbo Perimeter wall/1.jpg",
-      "/Kimbo Perimeter wall/2.jpg",
-      "/Kimbo Perimeter wall/3.jpg",
-    ],
-    description: "Perimeter Wall and Gate Kimbo.",
-  },
-  {
-    title: "Highland Scaping",
-    category: "Residential",
-    location: "Nyeri",
-    status: "Completed",
-    year: "2023",
-    image: "/Highlands Scaping/1.jpg",
-    images: [
-      "/Highlands Scaping/2.jpg",
-      "/Highlands Scaping/3.jpg",
-      "/Highlands Scaping/4.jpg",
-    ],
-    description: "Landscaping at Highlands.",
+      "projects done/Gate-House-Kimbo-complete/1.jpg",
+      "projects done/Gate-House-Kimbo-complete/2.jpeg",
+      "projects done/Gate-House-Kimbo-complete/3.jpeg",
+      "projects done/Gate-House-Kimbo-complete/4.jpeg",
+      "projects done/Gate-House-Kimbo-complete/5.jpeg",
+      "projects done/Gate-House-Kimbo-complete/6.jpeg",
+      "projects done/Gate-House-Kimbo-complete/7.jpeg"
+    ], // Explicit JPG image array
+    description: "Professional gate house construction at Kimbo Ruiru with modern security features.",
   },
 ]
 
@@ -108,12 +222,11 @@ const slideVariants = {
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30, scale: 0.95 },
-  visible: (i: number) => ({
+  visible: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { duration: 0.5, delay: i * 0.1, ease: "easeOut" },
-  }),
+  },
 }
 
 const modalVariants = {
@@ -305,7 +418,13 @@ export function ProjectsSection() {
                 className="absolute inset-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
               >
                 {getCurrentProjects().map((project, i) => (
-                  <motion.div key={i} custom={i} variants={cardVariants} initial="hidden" animate="visible">
+                  <motion.div 
+                    key={i} 
+                    variants={cardVariants} 
+                    initial="hidden" 
+                    animate="visible"
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                  >
                     <Card
                       className="h-full bg-white/90 backdrop-blur-sm border-0 shadow-md hover:shadow-lg transition-all duration-300 group hover:scale-[1.02] cursor-pointer"
                       onClick={() => openModal(project)}

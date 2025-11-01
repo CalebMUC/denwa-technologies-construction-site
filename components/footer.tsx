@@ -30,8 +30,8 @@ export function Footer() {
             </div>
             
             <p className="text-gray-300 mb-6 max-w-md leading-relaxed text-sm">
-              Kenya's trusted construction partner since 2009. Building excellence across residential, 
-              commercial, and infrastructure projects with uncompromising quality and local expertise.
+              Established in 2020, we've grown into Kenya's most trusted construction partner, 
+                delivering precision and quality across diverse projects and challenging environments.
             </p>
             
             <div className="space-y-3 mb-6">

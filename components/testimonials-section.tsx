@@ -14,7 +14,7 @@ const testimonials = [
     content:
       "Denwa Innovation built our Mary Immaculate school facilities with exceptional attention to detail. The team understood our educational requirements perfectly and delivered a safe, modern learning environment for our students.",
     rating: 5,
-    project: "Mary Immaculate",
+    project: "Mary Immaculate School",
     avatar: "MW",
   },
   {
@@ -23,7 +23,7 @@ const testimonials = [
     content:
       "The gate house at Kimbo was completed exactly as we envisioned. Professional workmanship, quality materials, and they finished ahead of schedule. Our security and aesthetics improved significantly.",
     rating: 5,
-    project: "Gate House at Kimbo",
+    project: "Gate House Kimbo",
     avatar: "JK",
   },
   {
@@ -32,7 +32,7 @@ const testimonials = [
     content:
       "Our perimeter wall and gate project in Kimbo exceeded expectations. Denwa Innovation provided excellent security solutions while maintaining the aesthetic appeal of our property. Highly recommend their services.",
     rating: 5,
-    project: "Perimeter Wall and Gate Kimbo",
+    project: "Perimeter Wall Kimbo",
     avatar: "GW",
   },
   {
@@ -41,8 +41,62 @@ const testimonials = [
     content:
       "The Highland Scaping project transformed our landscape beautifully. Their landscaping expertise and attention to environmental sustainability made our property a standout. Professional team with great results.",
     rating: 5,
-    project: "Highland Scaping",
+    project: "Highlands Landscaping",
     avatar: "PN",
+  },
+  {
+    name: "Engineer Samuel Mwangi",
+    role: "Construction Manager, Nyeri",
+    content:
+      "The steel structure project in Nyeri showcased Denwa Innovation's industrial expertise. Precise engineering, quality steel work, and adherence to safety standards. The structure is robust and will serve us for decades.",
+    rating: 5,
+    project: "Steel Structure Nyeri",
+    avatar: "SM",
+  },
+  {
+    name: "Mrs. Caroline Ngugi",
+    role: "Property Owner, Limuru",
+    content:
+      "Our perimeter wall in Limuru was expertly constructed with beautiful gate integration. The team was professional, completed on time, and the craftsmanship is outstanding. Our property security and value increased significantly.",
+    rating: 5,
+    project: "Perimeter Wall Limuru",
+    avatar: "CN",
+  },
+  {
+    name: "David Kiptoo",
+    role: "Warehouse Manager, Nyeri",
+    content:
+      "The Nyeri warehouse construction exceeded our expectations. Spacious design, quality materials, and excellent project management. Denwa Innovation delivered a world-class storage facility that serves our business perfectly.",
+    rating: 5,
+    project: "Nyeri Warehouse",
+    avatar: "DK",
+  },
+  {
+    name: "Eng. Mary Wanjiru",
+    role: "Infrastructure Coordinator, Kenya",
+    content:
+      "The culvert construction project demonstrated Denwa Innovation's infrastructure expertise. Professional drainage solutions with environmental considerations. Quality workmanship that ensures proper water management for years to come.",
+    rating: 5,
+    project: "Culvert Construction",
+    avatar: "MW2",
+  },
+  {
+    name: "Robert Macharia",
+    role: "Estate Developer, Nyeri",
+    content:
+      "The mansion construction in Nyeri showcases Denwa Innovation's luxury building capabilities. Attention to architectural details, premium finishes, and modern amenities. A truly exceptional residential masterpiece.",
+    rating: 5,
+    project: "Mansionate Speaker House",
+    avatar: "RM",
+  },
+  {
+    name: "Peter Muthomi",
+    role: "Security Supervisor, Ruiru",
+    content:
+      "Our perimeter wall project in Ruiru was completed with exceptional quality. Strong construction, beautiful finish, and enhanced our property security tremendously. Professional team that delivers exactly what they promise.",
+    rating: 5,
+    project: "Perimeter Wall Ruiru",
+    avatar: "PM",
   },
 ]
 
